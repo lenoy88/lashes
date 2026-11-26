@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore natural, wispy, and full-glam lash styles by Shaudai.">
+  <title>Shaudai Lash Studio</title>
+
+  <style>
+    :root {
+      --plum: #3c2035;
+      --ink: #291825;
+      --cream: #fff8f6;
+      --pink: #f4d6df;
+      --border: #dfc4ce;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font: 1rem/1.6 system-ui, sans-serif;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header, footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1rem clamp(1rem, 5vw, 5rem);
+    }
+
+    .brand {
+      font: 1.5rem Georgia, serif;
+      letter-spacing: .12em;
+    }
+
+    .brand span {
+      display: block;
+      text-align: center;
+      font: 700 .75rem system-ui, sans-serif;
+      letter-spacing: .25em;
+    }
+
+    nav { display: flex; gap: 1.25rem; }
+
+    button, .button {
+      display: inline-block;
+      padding: .65rem 1rem;
+      border: 1px solid var(--plum);
+      background: var(--pink);
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    :focus-visible {
+      outline: 3px solid #b85883;
+      outline-offset: 4px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 44% 56%;
+      background: var(--plum);
+      color: var(--cream);
+    }
+
+    .hero-copy {
+      align-self: center;
+      padding: clamp(2rem, 7vw, 7rem);
+    }
+
+    .hero img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      object-fit: cover;
+    }
+
+    h1, h2, h3 {
+      margin: .25em 0;
+      font-family: Georgia, serif;
+      font-weight: normal;
+      line-height: 1.05;
+    }
+
+    h1 { font-size: clamp(3.25rem, 7vw, 7rem); }
+    h1 em { color: #ffc7d9; }
+    h2 { font-size: clamp(2.2rem, 5vw, 4rem); }
+    h3 { font-size: 2rem; }
+
+    .label {
+      margin: 0;
+      font-size: .85rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    .section {
+      padding: clamp(2.5rem, 6vw, 6rem) clamp(1rem, 5vw, 5rem);
+    }
+
+    .section-heading { text-align: center; margin-bottom: 2rem; }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      max-width: 75rem;
+      margin: auto;
+    }
+
+    .product {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+    }
+
+    .lash-photo {
+      aspect-ratio: 4 / 3;
+      background: #d9a6b2 url("lashes.webp") center / 300% 100% no-repeat;
+    }
+
+    .natural { background-position: left; }
+    .glam { background-position: right; }
+
+    .product-copy {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 1.2rem;
+    }
+
+    .product-copy button { margin-top: auto; }
+    .product-copy button[aria-pressed="true"] {
+      background: var(--plum);
+      color: white;
+    }
+
+    .guide { background: #f4e1e8; }
+    .guide p { max-width: 55ch; }
+    footer { background: var(--plum); color: var(--cream); }
+
+    dialog {
+      width: min(90vw, 30rem);
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      background: var(--cream);
+      color: var(--ink);
+    }
+
+    dialog::backdrop { background: #291825b8; }
+
+    #favorites {
+      list-style: none;
+      padding: 0;
+    }
+
+    #favorites li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: .75rem;
+      padding: .6rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 700px) {
+      header nav { order: 3; width: 100%; justify-content: center; }
+      .hero, .products { grid-template-columns: 1fr; }
+      .hero img { height: auto; aspect-ratio: 4 / 3; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="brand" href="#">SHAUDAI<span>LASH STUDIO</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#collection">Collection</a>
+      <a href="#guide">Style guide</a>
+    </nav>
+    <button id="open-list" type="button">Lash list <span id="count">0</span></button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="label">Lashes by Shaudai</p>
+        <h1>Eyes on <em>you.</em></h1>
+        <p>Soft definition, fluttery layers, or full glam. Find the lash look that feels like you.</p>
+        <a class="button" href="#collection">Explore the collection</a>
+      </div>
+      <img src="hero.webp" alt="Beauty portrait featuring wispy lashes">
+    </section>
+
+    <section id="collection" class="section">
+      <div class="section-heading">
+        <h2>The collection</h2>
+        <p>Explore three preview styles and save your favorites.</p>
+      </div>
+
+      <div class="products">
+        <article class="product">
+          <div class="lash-photo natural" role="img" aria-label="Soft natural lashes"></div>
+          <div class="product-copy">
+            <p class="label">Natural</p>
+            <h3>Soft Muse</h3>
+            <p>Shorter lashes and soft definition for an everyday look.</p>
+            <button type="button" data-style="Soft Muse">Save style</button>
+          </div>
+        </article>
+
+        <article class="product">
+          <div class="lash-photo" role="img" aria-label="Layered wispy lashes"></div>
+          <div class="product-copy">
+            <p class="label">Wispy</p>
+            <h3>Afterglow</h3>
+            <p>Fluttery layers with a little lift at the outer corners.</p>
+            <button type="button" data-style="Afterglow">Save style</button>
+          </div>
+        </article>
+
+        <article class="product">
+          <div class="lash-photo glam" role="img" aria-label="Full dramatic lashes"></div>
+          <div class="product-copy">
+            <p class="label">Full glam</p>
+            <h3>Main Event</h3>
+            <p>Longer lashes and extra volume for a bolder look.</p>
+            <button type="button" data-style="Main Event">Save style</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="guide" class="section guide">
+      <h2>Find your finish</h2>
+      <p><strong>Soft Muse</strong> pairs with brushed brows and lip gloss.</p>
+      <p><strong>Afterglow</strong> works with a thin wing to play up the outer corners.</p>
+      <p><strong>Main Event</strong> goes with a smoky eye or bold liner for a night out.</p>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand" href="#">SHAUDAI<span>LASH STUDIO</span></a>
+    <p>Collection preview · Ordering details coming soon.</p>
+  </footer>
+
+  <dialog id="lash-list" aria-labelledby="list-title">
+    <h2 id="list-title">Your lash list</h2>
+    <p id="empty-list">Save a style from the collection to see it here.</p>
+    <ul id="favorites"></ul>
+    <button id="copy-list" type="button" hidden>Copy styles</button>
+    <p id="copy-status" role="status"></p>
+    <form method="dialog">
+      <button type="submit">Close</button>
+    </form>
+  </dialog>
+
+  <script>
+    const storageKey = "shaudai-lash-studio-favorites";
+    const styleButtons = [...document.querySelectorAll("[data-style]")];
+    const dialog = document.querySelector("#lash-list");
+    const list = document.querySelector("#favorites");
+    const copyButton = document.querySelector("#copy-list");
+    const copyStatus = document.querySelector("#copy-status");
+    const favorites = new Set();
+
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey) || "[]");
+      if (Array.isArray(saved)) {
+        for (const button of styleButtons) {
+          if (saved.includes(button.dataset.style)) {
+            favorites.add(button.dataset.style);
+          }
+        }
+      }
+    } catch {
+      // Favorites still work for this visit if browser storage is unavailable.
+    }
+
+    function renderFavorites() {
+      document.querySelector("#count").textContent = favorites.size;
+      document.querySelector("#empty-list").hidden = favorites.size > 0;
+      copyButton.hidden = favorites.size === 0;
+      list.replaceChildren();
+
+      for (const button of styleButtons) {
+        const style = button.dataset.style;
+        const saved = favorites.has(style);
+        button.textContent = saved ? "Saved" : "Save style";
+        button.setAttribute("aria-pressed", String(saved));
+        button.setAttribute("aria-label", `Save ${style}`);
+      }
+
+      for (const style of favorites) {
+        const item = document.createElement("li");
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.textContent = "Remove";
+        remove.setAttribute("aria-label", `Remove ${style}`);
+        remove.addEventListener("click", () => {
+          toggleFavorite(style);
+          (list.querySelector("button") || dialog.querySelector("form button")).focus();
+        });
+        item.append(style, remove);
+        list.append(item);
+      }
+    }
+
+    function toggleFavorite(style) {
+      if (favorites.has(style)) favorites.delete(style);
+      else favorites.add(style);
+
+      try {
+        localStorage.setItem(storageKey, JSON.stringify([...favorites]));
+      } catch {
+        // Keep the list available for this visit.
+      }
+
+      copyStatus.textContent = "";
+      renderFavorites();
+    }
+
+    for (const button of styleButtons) {
+      button.addEventListener("click", () => toggleFavorite(button.dataset.style));
+    }
+
+    document.querySelector("#open-list").addEventListener("click", () => {
+      copyStatus.textContent = "";
+      dialog.showModal();
+    });
+
+    copyButton.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText([...favorites].join(", "));
+        copyStatus.textContent = "Styles copied.";
+      } catch {
+        copyStatus.textContent = "You can select and copy the style names above.";
+      }
+    });
+
+    renderFavorites();
+  </script>
+</body>
+</html>
